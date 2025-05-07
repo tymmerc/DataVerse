@@ -27,3 +27,56 @@ export async function GET() {
 
   return response
 }
+export const dynamic = "force-dynamic";
+
+// Votre code de route existant pour l'API Spotify
+export async function GET(request) {
+  // Récupérer les paramètres d'URL
+  const { searchParams } = new URL(request.url);
+  const code = searchParams.get('code');
+  
+  if (!code) {
+    return new Response(JSON.stringify({ error: 'Authorization code missing' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+
+  try {
+    // Préparer les données pour la requête d'échange de code
+    const params = new URLSearchParams();
+    params.append("grant_type", "authorization_code");
+    params.append("code", code);
+    params.append("redirect_uri", process.env.REDIRECT_URI);
+    
+    // Requête pour obtenir le token d'accès
+    const response = await fetch("https://accounts.spotify.com/api/token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": `Basic ${Buffer.from(
+          `${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`
+        ).toString('base64')}`,
+      },
+      body: params
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error getting token: ${response.status}`);
+    }
+
+    const data = await response.json();
+    
+    // Retourner le token d'accès au client
+    return new Response(JSON.stringify(data), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  } catch (error) {
+    console.error("Error exchanging code for token:", error);
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+}
