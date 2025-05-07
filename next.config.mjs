@@ -9,6 +9,9 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  output: 'export',
+  // If you're deploying to a subdirectory, uncomment and set this:
+  //basePath: '/TymStats',
 }
 
 export default nextConfig

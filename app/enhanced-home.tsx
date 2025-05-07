@@ -24,7 +24,7 @@ export default function EnhancedHome() {
             <div className="inline-block mb-6 relative">
               <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 blur-xl opacity-20 animate-pulse"></div>
               <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 relative z-10">
-                John Doe
+                Tyméo MERCIER
               </h1>
             </div>
             <p className="text-lg md:text-xl text-gray-300 max-w-2xl mb-8 leading-relaxed">

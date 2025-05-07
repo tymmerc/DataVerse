@@ -41,7 +41,7 @@ export async function GET(request: Request) {
 // In a real application, you would need to implement the Spotify OAuth flow
 // Here's a simplified example of what that might look like:
 
-/*
+
 export async function POST(request: Request) {
   try {
     const { code } = await request.json();
@@ -73,4 +73,4 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Authentication failed' }, { status: 500 });
   }
 }
-*/
+
