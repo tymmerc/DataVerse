@@ -74,7 +74,7 @@ This is a **Next.js** application designed to demonstrate how to build a stylish
 ## 🚀 Getting Started
 
 1. Clone the repository  
-2. Run `npm install` to install dependencies  
+2. Run `npm install --legacy-peer-deps` to install dependencies  
 3. Start the development server with `npm run dev`  
 4. Open `http://localhost:3000` in your browser  
 
