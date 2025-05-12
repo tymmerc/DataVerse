@@ -16,7 +16,7 @@ This is a **Next.js** application designed to demonstrate how to build a stylish
 ---
 
 ## 📁 Project Structure
-"
+
 /
 ├── app/                          # Next.js App Router
 │   ├── api/                      # API routes
@@ -37,7 +37,7 @@ This is a **Next.js** application designed to demonstrate how to build a stylish
 │   ├── spotify-mock.ts           # Mock Spotify data
 │   └── utils.ts                  # Helper functions
 └── public/                       # Static assets
-"
+
 
 
 ---
