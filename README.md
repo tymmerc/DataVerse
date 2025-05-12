@@ -14,6 +14,20 @@ This is a **Next.js** application designed to demonstrate how to build a stylish
 - Mock API routes simulating external data fetching.
 
 ---
+## To-Do
+
+Voici une liste des tâches à accomplir pour améliorer ce projet :
+
+- [ ] Faire le nom en haut, fix le y de tymeo 
+- [ ] Ajouter une fonctionnalité de connexion via [Spotify API](https://developer.spotify.com/documentation/web-api/) pour récupérer les données utilisateur.
+- [ ] Intégrer les statistiques de [League of Legends](https://developer.riotgames.com/) via l'API de Riot Games.
+- [ ] Créer une interface utilisateur pour afficher les statistiques en temps réel.
+- [ ] Ajouter une fonctionnalité de recherche pour filtrer les données par utilisateur, application, ou type de statistique.
+- [ ] Mettre en place des graphiques interactifs avec [Chart.js](https://www.chartjs.org/) ou [D3.js](https://d3js.org/).
+- [ ] Ajouter une option de personnal
+
+---
+
 
 ## 📁 Project Structure
 
