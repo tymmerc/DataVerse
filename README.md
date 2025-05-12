@@ -16,28 +16,28 @@ This is a **Next.js** application designed to demonstrate how to build a stylish
 ---
 
 ## 📁 Project Structure
-
+"
 /
-├── app/                    # Next.js App Router  
-│   ├── api/                # API routes  
-│   │   ├── league/         # League of Legends API mock  
-│   │   └── spotify/        # Spotify API mock  
-│   ├── league/             # League of Legends page  
-│   ├── spotify/            # Spotify data page  
-│   ├── globals.css         # Global styles  
-│   ├── layout.tsx          # Root layout  
-│   └── page.tsx            # Homepage  
-├── components/             # Reusable components  
-│   ├── ui/                 # UI components (shadcn/ui)  
-│   ├── league-auth-button.tsx  
-│   ├── spotify-auth-button.tsx  
-│   └── theme-provider.tsx  # Theme provider  
-├── lib/                    # Utilities & mock data  
-│   ├── league-mock.ts      # Mock LoL data  
-│   ├── spotify-mock.ts     # Mock Spotify data  
-│   └── utils.ts            # Helper functions  
-└── public/                 # Static assets  
-
+├── app/                          # Next.js App Router
+│   ├── api/                      # API routes
+│   │   ├── league/               # League of Legends API mock
+│   │   └── spotify/              # Spotify API mock
+│   ├── league/                   # League of Legends page
+│   ├── spotify/                  # Spotify data page
+│   ├── globals.css               # Global styles
+│   ├── layout.tsx                # Root layout
+│   └── page.tsx                  # Homepage
+├── components/                   # Reusable components
+│   ├── ui/                       # UI components (shadcn/ui)
+│   ├── league-auth-button.tsx   # League of Legends auth button
+│   ├── spotify-auth-button.tsx  # Spotify auth button
+│   └── theme-provider.tsx       # Theme provider
+├── lib/                          # Utilities & mock data
+│   ├── league-mock.ts            # Mock LoL data
+│   ├── spotify-mock.ts           # Mock Spotify data
+│   └── utils.ts                  # Helper functions
+└── public/                       # Static assets
+"
 
 
 ---
