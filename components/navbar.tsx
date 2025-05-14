@@ -21,7 +21,7 @@ export function Navbar() {
     <header className="border-b border-gray-800 bg-gray-900/90 backdrop-blur-sm sticky top-0 z-40 w-full">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <Link href="/" className="text-xl font-bold text-white">
-          Data<span className="text-blue-400">Showcase</span>
+          Data<span className="text-blue-400">Verse</span>
         </Link>
 
         <nav className="hidden md:flex items-center space-x-6">
@@ -33,6 +33,9 @@ export function Navbar() {
           </Link>
           <Link href="/league" className="text-gray-300 hover:text-white transition-colors">
             League of Legends
+          </Link>
+          <Link href="/about-me" className="text-gray-300 hover:text-white transition-colors">
+            About me
           </Link>
         </nav>
 
