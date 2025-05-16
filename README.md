@@ -93,6 +93,27 @@ Voici une liste des tâches à accomplir pour améliorer ce projet :
 4. Open `http://localhost:3000` in your browser  
 
 ---
+## 🔑 Configuration SSH pour GitHub
+
+### Depuis votre terminal (en mode root) :
+`ssh-keygen -t ed25519 -C "tym.mercier@gmail.com"`
+(Laissez les options par défaut (appuyez sur Enter plusieurs fois))
+
+### Affichez votre clé publique :
+`cat ~/.ssh/id_ed25519.pub`
+
+### Copiez la clé publique et ajoutez-la à GitHub :
+Allez dans vos paramètres GitHub → SSH and GPG keys → New SSH key
+Collez votre clé publique
+Donnez un nom explicite (ex : serveur_root)
+
+### Configurez votre dépôt local pour utiliser SSH :
+`git remote set-url origin git@github.com:tymmerc/DataVerse.git`
+
+### Poussez normalement vos modifications :
+`bashgit push -u origin mainv`
+
+---
 
 ## 🔧 Extend It Further
 
