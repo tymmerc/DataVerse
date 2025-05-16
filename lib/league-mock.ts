@@ -1,153 +1,233 @@
-// This file contains mock data for League of Legends
-// In a real application, you would replace this with actual API calls
+// League of Legends API client
 
-export interface PlayerInfo {
-  summonerName: string
-  region: string
-  level: number
-  rank: string
-  lp: number
-  winRate: number
-  profileIcon: string
-}
+const RIOT_API_KEY = process.env.RIOT_API_KEY
+// Log whether the API key is available (remove this in production)
+console.log("Riot API Key available:", !!RIOT_API_KEY)
+const REGION = "euw1" // Change this to your region if needed
+const BASE_URL = `https://${REGION}.api.riotgames.com/lol`
 
-export interface Champion {
+// Types for League of Legends API responses
+export interface SummonerData {
+  id: string
+  accountId: string
+  puuid: string
   name: string
-  games: number
-  winRate: number
-  kda: string
-  image: string
+  profileIconId: number
+  revisionDate: number
+  summonerLevel: number
 }
 
-export interface Match {
-  champion: string
-  result: "Victory" | "Defeat"
-  kda: string
-  cs: number
-  duration: string
-  date: string
-  image: string
+export interface LeagueEntry {
+  leagueId: string
+  summonerId: string
+  summonerName: string
+  queueType: string
+  tier: string
+  rank: string
+  leaguePoints: number
+  wins: number
+  losses: number
+  hotStreak: boolean
+  veteran: boolean
+  freshBlood: boolean
+  inactive: boolean
 }
 
-export interface RankHistory {
-  month: string
-  lp: number
-}
-
-export interface RolePerformance {
-  role: string
-  value: number
-}
-
-// Function to simulate fetching player info
-export async function getPlayerInfo(summonerName = "ProGamer123"): Promise<PlayerInfo> {
-  // In a real app, this would be an API call like:
-  // const response = await fetch(`https://your-api-gateway.com/lol/summoner/v4/summoners/by-name/${summonerName}`, {
-  //   headers: {
-  //     'X-Riot-Token': process.env.RIOT_API_KEY
-  //   }
-  // });
-  // const data = await response.json();
-  // Then fetch rank info with another call using the summoner ID
-
-  // Mock data
-  return {
-    summonerName: "ProGamer123",
-    region: "NA",
-    level: 187,
-    rank: "Platinum II",
-    lp: 75,
-    winRate: 58,
-    profileIcon: "/placeholder.svg?height=100&width=100",
+export interface MatchSummary {
+  metadata: {
+    matchId: string
+    participants: string[]
+  }
+  info: {
+    gameCreation: number
+    gameDuration: number
+    gameId: number
+    gameMode: string
+    gameName: string
+    gameType: string
+    gameVersion: string
+    mapId: number
+    participants: MatchParticipant[]
+    platformId: string
+    queueId: number
+    teams: any[]
   }
 }
 
-// Function to simulate fetching top champions
-export async function getTopChampions(): Promise<Champion[]> {
-  // Mock data
-  return [
-    { name: "Yasuo", games: 152, winRate: 62, kda: "8.2/4.5/6.3", image: "/placeholder.svg?height=60&width=60" },
-    { name: "Lee Sin", games: 98, winRate: 57, kda: "6.8/3.9/9.2", image: "/placeholder.svg?height=60&width=60" },
-    { name: "Ahri", games: 87, winRate: 65, kda: "7.5/3.2/8.7", image: "/placeholder.svg?height=60&width=60" },
-    { name: "Thresh", games: 76, winRate: 59, kda: "2.1/4.3/15.6", image: "/placeholder.svg?height=60&width=60" },
-    { name: "Jinx", games: 68, winRate: 53, kda: "9.3/5.1/7.2", image: "/placeholder.svg?height=60&width=60" },
-  ]
+export interface MatchParticipant {
+  assists: number
+  baronKills: number
+  bountyLevel: number
+  champExperience: number
+  champLevel: number
+  championId: number
+  championName: string
+  deaths: number
+  doubleKills: number
+  firstBloodKill: boolean
+  goldEarned: number
+  goldSpent: number
+  individualPosition: string
+  kills: number
+  lane: string
+  neutralMinionsKilled?: number
+  pentaKills: number
+  quadraKills: number
+  role: string
+  summonerName?: string
+  teamId: number
+  teamPosition: string
+  timeCCingOthers: number
+  totalDamageDealt: number
+  totalDamageDealtToChampions: number
+  totalDamageTaken: number
+  totalHeal: number
+  totalMinionsKilled: number
+  tripleKills: number
+  trueDamageDealt: number
+  trueDamageDealtToChampions: number
+  trueDamageTaken: number
+  visionScore: number
+  wardsKilled: number
+  wardsPlaced: number
+  win: boolean
 }
 
-// Function to simulate fetching recent matches
-export async function getRecentMatches(): Promise<Match[]> {
-  // Mock data
-  return [
-    {
-      champion: "Yasuo",
-      result: "Victory",
-      kda: "12/3/8",
-      cs: 245,
-      duration: "32:15",
-      date: "Today",
-      image: "/placeholder.svg?height=60&width=60",
-    },
-    {
-      champion: "Lee Sin",
-      result: "Defeat",
-      kda: "5/7/12",
-      cs: 178,
-      duration: "28:42",
-      date: "Today",
-      image: "/placeholder.svg?height=60&width=60",
-    },
-    {
-      champion: "Ahri",
-      result: "Victory",
-      kda: "9/2/11",
-      cs: 213,
-      duration: "35:08",
-      date: "Yesterday",
-      image: "/placeholder.svg?height=60&width=60",
-    },
-    {
-      champion: "Yasuo",
-      result: "Victory",
-      kda: "15/5/7",
-      cs: 267,
-      duration: "38:21",
-      date: "Yesterday",
-      image: "/placeholder.svg?height=60&width=60",
-    },
-    {
-      champion: "Thresh",
-      result: "Defeat",
-      kda: "1/6/22",
-      cs: 45,
-      duration: "25:36",
-      date: "2 days ago",
-      image: "/placeholder.svg?height=60&width=60",
-    },
-  ]
+export interface ChampionMastery {
+  championId: number
+  championLevel: number
+  championPoints: number
+  lastPlayTime: number
+  championPointsSinceLastLevel: number
+  championPointsUntilNextLevel: number
+  chestGranted: boolean
+  tokensEarned: number
+  summonerId: string
 }
 
-// Function to simulate fetching rank history
-export async function getRankHistory(): Promise<RankHistory[]> {
-  // Mock data
-  return [
-    { month: "Jan", lp: 45 },
-    { month: "Feb", lp: 52 },
-    { month: "Mar", lp: 48 },
-    { month: "Apr", lp: 61 },
-    { month: "May", lp: 57 },
-    { month: "Jun", lp: 65 },
-    { month: "Jul", lp: 75 },
-  ]
+// Champion data mapping (simplified)
+export const championIdToName: Record<number, string> = {
+  1: "Annie",
+  2: "Olaf",
+  3: "Galio",
+  4: "Twisted Fate",
+  5: "Xin Zhao",
+  // Add more as needed or fetch from Data Dragon
 }
 
-// Function to simulate fetching role performance
-export async function getRolePerformance(): Promise<RolePerformance[]> {
-  // Mock data
-  return [
-    { role: "Top", value: 65 },
-    { role: "Jungle", value: 80 },
-    { role: "Mid", value: 90 },
-    { role: "ADC", value: 70 },
-    { role: "Support", value: 60 },
-  ]
+// API functions
+export async function getSummonerByName(summonerName: string): Promise<SummonerData> {
+  const url = `${BASE_URL}/summoner/v4/summoners/by-name/${encodeURIComponent(summonerName)}`
+
+  const response = await fetch(url, {
+    headers: {
+      "X-Riot-Token": RIOT_API_KEY || "",
+    },
+  })
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch summoner data: ${response.status} ${response.statusText}`)
+  }
+
+  return response.json()
+}
+
+export async function getLeagueEntries(summonerId: string): Promise<LeagueEntry[]> {
+  const url = `${BASE_URL}/league/v4/entries/by-summoner/${summonerId}`
+
+  const response = await fetch(url, {
+    headers: {
+      "X-Riot-Token": RIOT_API_KEY || "",
+    },
+  })
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch league entries: ${response.status} ${response.statusText}`)
+  }
+
+  return response.json()
+}
+
+export async function getMatchIdsByPuuid(puuid: string, count = 10): Promise<string[]> {
+  const url = `https://${REGION}.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?count=${count}`
+
+  const response = await fetch(url, {
+    headers: {
+      "X-Riot-Token": RIOT_API_KEY || "",
+    },
+  })
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch match IDs: ${response.status} ${response.statusText}`)
+  }
+
+  return response.json()
+}
+
+export async function getMatchById(matchId: string): Promise<MatchSummary> {
+  const url = `https://${REGION}.api.riotgames.com/lol/match/v5/matches/${matchId}`
+
+  const response = await fetch(url, {
+    headers: {
+      "X-Riot-Token": RIOT_API_KEY || "",
+    },
+  })
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch match data: ${response.status} ${response.statusText}`)
+  }
+
+  return response.json()
+}
+
+export async function getChampionMasteries(summonerId: string): Promise<ChampionMastery[]> {
+  const url = `${BASE_URL}/champion-mastery/v4/champion-masteries/by-summoner/${summonerId}`
+
+  const response = await fetch(url, {
+    headers: {
+      "X-Riot-Token": RIOT_API_KEY || "",
+    },
+  })
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch champion masteries: ${response.status} ${response.statusText}`)
+  }
+
+  return response.json()
+}
+
+// Helper function to get player stats from recent matches
+export async function getPlayerRecentStats(summonerName: string): Promise<{
+  summoner: SummonerData
+  leagueEntries: LeagueEntry[]
+  recentMatches: MatchSummary[]
+  championMasteries: ChampionMastery[]
+}> {
+  try {
+    // Get summoner data
+    const summoner = await getSummonerByName(summonerName)
+
+    // Get league entries
+    const leagueEntries = await getLeagueEntries(summoner.id)
+
+    // Get recent match IDs
+    const matchIds = await getMatchIdsByPuuid(summoner.puuid, 5)
+
+    // Get match details
+    const matchPromises = matchIds.map((id) => getMatchById(id))
+    const recentMatches = await Promise.all(matchPromises)
+
+    // Get champion masteries
+    const championMasteries = await getChampionMasteries(summoner.id)
+
+    return {
+      summoner,
+      leagueEntries,
+      recentMatches,
+      championMasteries,
+    }
+  } catch (error) {
+    console.error("Error fetching player stats:", error)
+    throw error
+  }
 }

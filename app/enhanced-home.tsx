@@ -32,27 +32,45 @@ export default function EnhancedHome() {
               intersection of technology and creativity through code.
             </p>
             <div className="flex gap-4 mb-12">
-              <Button
-                variant="outline"
-                size="icon"
-                className="border-gray-700 text-gray-400 hover:text-white hover:border-gray-600 hover:bg-gray-800/50 transition-all"
+              <a
+                href="https://github.com/tymmerc"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <Github className="h-5 w-5" />
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
-                className="border-gray-700 text-gray-400 hover:text-white hover:border-gray-600 hover:bg-gray-800/50 transition-all"
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="border-gray-700 text-gray-400 hover:text-white hover:border-gray-600 hover:bg-gray-800/50 transition-all"
+                >
+                  <Github className="h-5 w-5" />
+                </Button>
+              </a>
+
+              <a
+                href="https://www.linkedin.com/in/tyméo-mercier-aa9618265/"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <Linkedin className="h-5 w-5" />
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
-                className="border-gray-700 text-gray-400 hover:text-white hover:border-gray-600 hover:bg-gray-800/50 transition-all"
-              >
-                <Mail className="h-5 w-5" />
-              </Button>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="border-gray-700 text-gray-400 hover:text-white hover:border-gray-600 hover:bg-gray-800/50 transition-all"
+                >
+                  <Linkedin className="h-5 w-5" />
+                </Button>
+              </a>
+              {/* to do, not working */}
+              <a href="mailto:tym.mercier@gmail.com?subject=Contact%20depuis%20Data%20Verse">
+
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="border-gray-700 text-gray-400 hover:text-white hover:border-gray-600 hover:bg-gray-800/50 transition-all"
+                >
+                  <Mail className="h-5 w-5" />
+                </Button>
+              </a>
+
             </div>
 
             {/* Ajouter un bouton de connexion Spotify si l'utilisateur est connecté mais n'a pas encore lié Spotify */}
