@@ -7,169 +7,9 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle, Music, User, Clock, ListMusic, Loader2, LogOut, LogIn } from "lucide-react"
-import { type SpotifyTimeRange, timeRanges } from "@/lib/spotify-mock"
+import { type SpotifyUserData, type SpotifyTimeRange, timeRanges } from "@/lib/spotify-mock"
 
-// Types for Spotify API responses (moved inline to avoid import issues)
-interface SpotifyUserProfile {
-  country: string
-  display_name: string
-  email: string
-  explicit_content: {
-    filter_enabled: boolean
-    filter_locked: boolean
-  }
-  external_urls: {
-    spotify: string
-  }
-  followers: {
-    href: string | null
-    total: number
-  }
-  href: string
-  id: string
-  images: Array<{
-    url: string
-    height: number
-    width: number
-  }>
-  product: string
-  type: string
-  uri: string
-}
-
-interface SpotifyTrack {
-  album: {
-    album_type: string
-    artists: Array<{
-      external_urls: {
-        spotify: string
-      }
-      href: string
-      id: string
-      name: string
-      type: string
-      uri: string
-    }>
-    available_markets: string[]
-    external_urls: {
-      spotify: string
-    }
-    href: string
-    id: string
-    images: Array<{
-      height: number
-      url: string
-      width: number
-    }>
-    name: string
-    release_date: string
-    release_date_precision: string
-    total_tracks: number
-    type: string
-    uri: string
-  }
-  artists: Array<{
-    external_urls: {
-      spotify: string
-    }
-    href: string
-    id: string
-    name: string
-    type: string
-    uri: string
-  }>
-  available_markets: string[]
-  disc_number: number
-  duration_ms: number
-  explicit: boolean
-  external_ids: {
-    isrc: string
-  }
-  external_urls: {
-    spotify: string
-  }
-  href: string
-  id: string
-  is_local: boolean
-  name: string
-  popularity: number
-  preview_url: string
-  track_number: number
-  type: string
-  uri: string
-}
-
-interface SpotifyArtist {
-  external_urls: {
-    spotify: string
-  }
-  followers: {
-    href: string | null
-    total: number
-  }
-  genres: string[]
-  href: string
-  id: string
-  images: Array<{
-    url: string
-    height: number
-    width: number
-  }>
-  name: string
-  popularity: number
-  type: string
-  uri: string
-}
-
-interface SpotifyPlaylist {
-  collaborative: boolean
-  description: string
-  external_urls: {
-    spotify: string
-  }
-  href: string
-  id: string
-  images: Array<{
-    url: string
-    height: number
-    width: number
-  }>
-  name: string
-  owner: {
-    external_urls: {
-      spotify: string
-    }
-    followers: {
-      href: string
-      total: number
-    }
-    href: string
-    id: string
-    type: string
-    uri: string
-    display_name: string
-  }
-  public: boolean
-  snapshot_id: string
-  tracks: {
-    href: string
-    total: number
-  }
-  type: string
-  uri: string
-}
-
-interface SpotifyUserData {
-  profile: SpotifyUserProfile | null
-  topTracks: SpotifyTrack[]
-  topArtists: SpotifyArtist[]
-  recentlyPlayed: SpotifyTrack[]
-  playlists: SpotifyPlaylist[]
-  timeRange: SpotifyTimeRange
-}
-
-// SpotifyDataDisplay component embedded directly in the page
-function SpotifyDataDisplay() {
+export function SpotifyDataDisplay() {
   const [data, setData] = useState<SpotifyUserData | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -182,27 +22,21 @@ function SpotifyDataDisplay() {
     setError(null)
 
     try {
-      console.log("Fetching Spotify data with time range:", selectedTimeRange.value)
-
       const response = await fetch(`/api/spotify/data?timeRange=${selectedTimeRange.value}`)
 
       if (!response.ok) {
-        const errorText = await response.text()
-        console.error("API response error:", response.status, errorText)
-        throw new Error(`Error ${response.status}: ${errorText || response.statusText}`)
+        throw new Error(`Error ${response.status}: ${response.statusText}`)
       }
 
       const spotifyData = await response.json()
-      console.log("Spotify data received:", spotifyData ? "Data received" : "No data")
-
       setData(spotifyData)
 
       // Check if this is the owner's data or the user's data
       setIsOwnerData(!spotifyData.profile?.id || spotifyData.profile.id === "youruserid")
       setIsAuthenticated(!isOwnerData)
     } catch (err) {
-      console.error("Error fetching Spotify data:", err)
       setError(err instanceof Error ? err.message : "Failed to fetch Spotify data")
+      console.error("Error fetching Spotify data:", err)
     } finally {
       setLoading(false)
     }
@@ -347,19 +181,6 @@ function SpotifyDataDisplay() {
             ))}
           </TabsList>
         </Tabs>
-      </div>
-
-      <div className="mb-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => {
-            window.open("/api/spotify/debug", "_blank")
-          }}
-          className="text-xs"
-        >
-          Debug API
-        </Button>
       </div>
 
       {/* Main Content */}
@@ -538,16 +359,6 @@ function SpotifyDataDisplay() {
           </CardContent>
         </Card>
       </div>
-    </div>
-  )
-}
-
-// Main page component
-export default function SpotifyPage() {
-  return (
-    <div className="container mx-auto px-4 py-8 pt-20">
-      <h1 className="text-3xl font-bold mb-6 text-white">Spotify Stats</h1>
-      <SpotifyDataDisplay />
     </div>
   )
 }
